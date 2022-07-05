@@ -2,15 +2,18 @@ package com.example.escola;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
 
 import com.example.escola.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
+    InputMethodManager imm;
     private ActivityMainBinding binding;
 
     @Override
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.layResult.setVisibility(View.INVISIBLE);
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     public void Calcular(View view) {
@@ -37,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (ok) {
+            imm.hideSoftInputFromWindow(binding.edtM1.getWindowToken(), 0);
+            binding.layResult.setVisibility(View.VISIBLE);
             float n1 = Float.parseFloat(binding.edtM1.getText().toString());
             float n2 = Float.parseFloat(binding.edtM2.getText().toString());
             float m = (n1 + n2) / 2;
